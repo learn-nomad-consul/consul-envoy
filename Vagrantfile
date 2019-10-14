@@ -31,9 +31,9 @@ Vagrant.configure("2") do |config|
 
     machine.vm.provision :ansible_local do |ansible|
       ansible.playbook       = "/vagrant/ansible/main.yml"
-      # ansible.verbose        = true
       ansible.install        = true
-      ansible.limit          = "all" 
+      ansible.limit          = "all"
+      ansible.verbose        = true
       ansible.inventory_path = "/vagrant/ansible/inventory"
     end
   end
