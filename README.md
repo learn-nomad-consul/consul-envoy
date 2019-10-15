@@ -41,8 +41,7 @@ worker-1  172.16.1.11:8301  alive   client  1.6.1  2         dc1  <default>
 
 ```
 vagrant ssh worker-1
-sudo docker exec -it caller sh
-curl localhost:12345
+sudo docker exec caller curl localhost:12345
 ```
 
 If you've got a response from `echo`, it means that everything worked properly !
