@@ -1,0 +1,7 @@
+---
+
+- name: apply consul confs
+  shell: consul config write {{ item }}
+  with_fileglob:
+    - ../../../../files/confs/*
+  when: inventory_hostname == 'worker-0'

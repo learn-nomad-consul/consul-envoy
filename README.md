@@ -37,7 +37,7 @@ worker-1  172.16.1.11:8301  alive   client  1.6.1  2         dc1  <default>
 
 \* except "provisionner" which is used to run Ansible scripts and is not part of the cluster
 
-### Check Connect/Envoy setup 
+### Check Connect/Envoy L4 setup 
 
 ```
 vagrant ssh worker-1
@@ -45,3 +45,22 @@ sudo docker exec caller curl localhost:12345
 ```
 
 If you've got a response from `echo`, it means that everything worked properly !
+
+### Check Connect/Envoy L7 setup 
+
+```
+vagrant ssh worker-1
+sudo docker exec caller_canary watch 'curl http://echo'
+```
+
+you shoudl have responses from `echo` container (2/3) `echo2` container (1/3)
+
+### Access Consul UI
+
+Open a SSH tunnel from your host to the master VM in order to forward the port 8080 on your loopback to the port 8500 of the distant server's loopback.
+
+```
+ssh -L localhost:8080:localhost:8500 -i ./.vagrant/machines/master/virtualbox/private_key vagrant@172.16.0.10
+```
+
+Leave your terminal open, then open in your browser [http://localhost:8080/ui/](http://localhost:8080/ui/)

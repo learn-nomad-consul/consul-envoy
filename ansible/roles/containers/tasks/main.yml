@@ -1,7 +1,17 @@
 ---
 
+- name: apply_defaults
+  import_tasks: apply-defaults.yml 
+
 - name: echo
   import_tasks: echo.yml
 
+- name: echo2
+  import_tasks: echo2.yml
+
 - name: caller
   import_tasks: caller.yml
+
+- name: caller_canary
+  import_tasks: caller-canary.yml
+

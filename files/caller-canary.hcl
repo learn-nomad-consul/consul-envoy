@@ -1,5 +1,5 @@
 service {
-  name = "caller"
+  name = "caller-canary"
   port = 9000
 
   connect {
@@ -7,7 +7,7 @@ service {
       proxy {
         upstreams = [
           {
-            destination_name = "echo"
+            destination_name = "echo-virtual"
             local_bind_port = 12345
           }
         ]

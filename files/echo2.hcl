@@ -1,14 +1,14 @@
 service {
-  name = "echo"
+  name = "echo2"
   port = 5678
 
   connect {
     sidecar_service {
-      port = 20000
+      port = 20001
 
-      checks {
+      check {
         name = "Connect Sidecar Listening"
-        alias_service = "echo"
+        alias_service = "echo2"
       }
     }
   }
