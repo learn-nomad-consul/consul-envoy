@@ -1,17 +1,17 @@
 ---
 
-#- name: install docker on clients
-#  hosts: workers
-#  become: yes
-#  roles:
-#    - docker-install
-#
-#- name: install consul
-#  hosts: all
-#  order: sorted
-#  become: yes
-#  roles:
-#    - consul-install
+- name: install docker on clients
+  hosts: workers
+  become: yes
+  roles:
+    - docker-install
+
+- name: install consul
+  hosts: all
+  order: sorted
+  become: yes
+  roles:
+    - consul-install
 
 - name: start containers 
   hosts: workers

@@ -1,6 +1,12 @@
 ---
 
-- name: apply consul confs
+- name: apply consul default confs
+  shell: consul config write {{ item }}
+  with_fileglob:
+    - ../../../../files/confs/defaults/*
+  when: inventory_hostname == 'worker-0'
+
+- name: apply consul routers
   shell: consul config write {{ item }}
   with_fileglob:
     - ../../../../files/confs/*
