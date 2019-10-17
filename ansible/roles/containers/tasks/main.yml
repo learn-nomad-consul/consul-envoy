@@ -15,4 +15,6 @@
 - name: apply_defaults
   import_tasks: apply-defaults.yml 
 
+- name: chaos
+  import_tasks: chaos.yml
 

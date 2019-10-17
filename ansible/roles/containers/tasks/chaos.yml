@@ -1,0 +1,35 @@
+---
+
+- name: add chaos service definition 
+  become: yes
+  copy:
+    src: ../../../../files/chaos.hcl
+    dest: /etc/consul.d/chaos.hcl
+    mode: '0640'
+    owner: vagrant
+  when: inventory_hostname == 'worker-0'
+ 
+- name: reload consul 
+  shell: consul reload
+  when: inventory_hostname == 'worker-0'
+  
+- name: start chaos proxy 
+  docker_container:
+    name: chaos_proxy
+    image: err0r500/consul-envoy
+    command: --sidecar-for chaos --http-addr 172.17.0.1:8500 --grpc-addr 172.17.0.1:8502
+    auto_remove: true
+    state: started
+    restart: yes
+    published_ports:
+      - "20002:20002"
+  when: inventory_hostname == 'worker-0'
+
+- name: start chaos 
+  docker_container:
+    name: chaos
+    image: err0r500/chaos-container 
+    state: started
+    restart: yes
+    network_mode: "container:echo_proxy"
+  when: inventory_hostname == 'worker-0'

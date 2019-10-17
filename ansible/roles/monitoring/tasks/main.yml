@@ -1,0 +1,5 @@
+---
+
+- name: prometheus setup
+  import_tasks: prometheus.yml
+

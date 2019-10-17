@@ -11,6 +11,8 @@ routes = [
 
     destination {
       service = "echo2"
+      num_retries = 3
+      retry_on_status_codes = [500, 501]
     }
   },
   {

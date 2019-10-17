@@ -1,0 +1,37 @@
+---
+
+- name: ensure ~/prometheus/ directory exists
+  become: no
+  file:
+    path: ~/prometheus/
+    state: directory
+    owner: vagrant
+
+- name: copy prometheus conf 
+  become: no
+  copy:
+    src: ./conf/prometheus.yml 
+    dest: ~/prometheus/prometheus.yml
+    mode: '0644'
+    owner: vagrant
+
+- name: start statsD 
+  docker_container:
+    name: statsD 
+    image: prom/statsd-exporter
+    state: started
+    restart: yes
+    published_ports:
+      - "9102:9102"
+      - "9125:9125"
+
+- name: start prometheus 
+  docker_container:
+    name: prometheus
+    image: prom/prometheus
+    state: started
+    restart: yes
+    published_ports:
+      - "9090:9090"
+    volumes:
+      - ~/prometheus:/etc/prometheus
