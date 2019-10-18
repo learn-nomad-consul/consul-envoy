@@ -64,3 +64,19 @@ ssh -L localhost:8080:localhost:8500 -i ./.vagrant/machines/master/virtualbox/pr
 ```
 
 Leave your terminal open, then open in your browser [http://localhost:8080/ui/](http://localhost:8080/ui/)
+
+
+
+### Prometheus failed to start
+```
+vagrant ssh worker-1
+sudo docker run --rm -p 9090:9090 -v ~/prometheus/:/etc/prometheus/ prom/prometheus
+```
+
+### Grafana
+requests statuses to echo service
+```
+envoy_listener_127_0_0_1_12345_http_upstream_echo_virtual_http_downstream_rq_2xx
+envoy_listener_127_0_0_1_12345_http_upstream_echo_virtual_http_downstream_rq_4xx
+envoy_listener_127_0_0_1_12345_http_upstream_echo_virtual_http_downstream_rq_5xx
+```
