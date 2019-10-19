@@ -1,5 +1,6 @@
 kind = "service-splitter"
 name = "echo"
+
 splits = [
   {
     weight = 90

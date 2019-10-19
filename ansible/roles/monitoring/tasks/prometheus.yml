@@ -15,6 +15,27 @@
     mode: '0644'
     owner: vagrant
 
+- name: add prometheus service definition 
+  become: yes
+  copy:
+    src: ../../../../files/prometheus.hcl
+    dest: /etc/consul.d/prometheus.hcl
+    mode: '0640'
+    owner: vagrant
+
+- name: reload consul 
+  shell: consul reload
+
+- name: start prometheus proxy 
+  docker_container:
+    name: prometheus_proxy
+    image: err0r500/consul-envoy
+    command: --sidecar-for prometheus --http-addr 127.0.0.1:8500 --grpc-addr 127.0.0.1:8502
+    auto_remove: true
+    state: started
+    network_mode: host
+    restart: yes
+
 - name: start prometheus 
   docker_container:
     name: prometheus
