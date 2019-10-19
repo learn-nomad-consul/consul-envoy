@@ -50,10 +50,10 @@ If you've got a response from `echo`, it means that everything worked properly !
 
 ```
 vagrant ssh worker-1
-sudo docker exec caller_canary watch 'curl http://echo'
+watch 'sudo docker exec caller_canary curl localhost:12345'
 ```
 
-you shoudl have responses from `echo` container (2/3) `echo2` container (1/3)
+you should have responses from `echo` container (2/3) `echo2` container (1/3)
 
 ### Access Consul UI
 
@@ -67,16 +67,12 @@ Leave your terminal open, then open in your browser [http://localhost:8080/ui/](
 
 
 
-### Prometheus failed to start
+### Grafana
+
+requests statuses to echo service
+
 ```
-vagrant ssh worker-1
-sudo docker run --rm -p 9090:9090 -v ~/prometheus/:/etc/prometheus/ prom/prometheus
+ssh -L localhost:3000:localhost:3000 -i ./.vagrant/machines/monitoring/virtualbox/private_key vagrant@172.16.1.12
 ```
 
-### Grafana
-requests statuses to echo service
-```
-envoy_listener_127_0_0_1_12345_http_upstream_echo_virtual_http_downstream_rq_2xx
-envoy_listener_127_0_0_1_12345_http_upstream_echo_virtual_http_downstream_rq_4xx
-envoy_listener_127_0_0_1_12345_http_upstream_echo_virtual_http_downstream_rq_5xx
-```
+Open your `localhost:3000` in your browser, then look for metrics starting with "envoy"

@@ -30,6 +30,7 @@
     name: echo
     image: hashicorp/http-echo 
     command: -text="hi from echo server" 
+    auto_remove: true
     state: started
     restart: yes
     network_mode: "container:echo_proxy"

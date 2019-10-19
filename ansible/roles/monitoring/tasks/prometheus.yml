@@ -15,15 +15,6 @@
     mode: '0644'
     owner: vagrant
 
-- name: start statsD 
-  docker_container:
-    name: statsD 
-    image: prom/statsd-exporter
-    command: --statsd.listen-udp="172.17.0.1:9125" --statsd.listen-tcp="" --web.listen-address="127.0.0.1:9102" # listen only to the docker bridge
-    state: started
-    restart: yes
-    network_mode: host
-
 - name: start prometheus 
   docker_container:
     name: prometheus
@@ -37,11 +28,11 @@
 
 - name: start grafana 
   docker_container:
-    name: prometheus
+    name: grafana
     image: grafana/grafana 
     state: started
     restart: yes
     network_mode: host
     env:
-      - GF_SERVER_HTTP_ADDR=127.0.0.1
-      - GF_SERVER_HTTP_PORT=3000
+      GF_SERVER_HTTP_ADDR: "127.0.0.1"
+      GF_SERVER_HTTP_PORT: "3000"

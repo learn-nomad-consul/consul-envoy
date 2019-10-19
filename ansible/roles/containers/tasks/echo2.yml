@@ -30,6 +30,7 @@
     name: echo2
     image: hashicorp/http-echo 
     command: -text="version 2 hello from the new echo server" 
+    auto_remove: true
     state: started
     restart: yes
     network_mode: "container:echo2_proxy"

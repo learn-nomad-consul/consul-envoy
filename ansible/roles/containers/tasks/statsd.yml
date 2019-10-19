@@ -1,0 +1,12 @@
+---
+
+- name: start statsD 
+  docker_container:
+    name: statsD 
+    image: prom/statsd-exporter
+    command: --statsd.listen-udp="172.17.0.1:9125" --statsd.listen-tcp="" # --web.listen-address="172.16.1.11:9102" # listen only to the docker bridge
+    state: started
+    restart: yes
+    network_mode: host
+  when: inventory_hostname == 'worker-1'
+

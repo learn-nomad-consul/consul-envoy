@@ -26,6 +26,12 @@ Vagrant.configure("2") do |config|
     end
   end
 
+  config.vm.define "monitoring" do |c|
+    c.vm.hostname = "monitoring"
+    c.vm.network "private_network", ip: "172.16.1.12"
+  end
+
+
   config.vm.define 'controller' do |machine|
     machine.vm.network "private_network", ip: "172.16.2.10"
 

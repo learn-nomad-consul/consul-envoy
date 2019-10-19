@@ -1,5 +1,12 @@
 ---
 
+- name: apply_defaults
+  import_tasks: apply-defaults.yml 
+
+# statsd must be running before proxies start (otherwise they won't send traffic on it)
+- name: statsd
+  import_tasks: statsd.yml
+
 - name: echo
   import_tasks: echo.yml
 
@@ -11,9 +18,6 @@
 
 - name: caller_canary
   import_tasks: caller-canary.yml
-
-- name: apply_defaults
-  import_tasks: apply-defaults.yml 
 
 - name: chaos
   import_tasks: chaos.yml
