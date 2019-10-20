@@ -5,10 +5,20 @@ global:
       monitor: 'prometheus-stack-monitor'
 
 scrape_configs:
-  - job_name: 'envoy-metrics'
+  - job_name: 'containers'
     scrape_interval: 10s
     scrape_timeout: 5s
-    static_configs:
-      - targets: ['127.0.0.1:2345'] # statsD through consul connect exposed metrics
-        labels:
-          group: 'services'
+    consul_sd_configs:
+      - server: 'localhost:8500'
+    relabel_configs:
+      - source_labels: [__meta_consul_service]
+        target_label: service
+        regex: statsd 
+        action: keep
+      - source_labels: [__address__]
+        target_label:  '__address__'
+        replacement:   'localhost:2345'
+      - source_labels: [__meta_consul_node]
+        target_label:  'node'
+      - source_labels: [__meta_consul_address]
+        target_label:  'node_ip'
